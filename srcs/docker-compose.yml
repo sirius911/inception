@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+
+    db:
+        image: mariadb
+        restart: always
+        environment:
+            -MYSQL_TCP_PORT=xxxx
+            - MYiSQL_ROOT_PASSWORD=1235
+        ports:
+            - "xxx:3306
