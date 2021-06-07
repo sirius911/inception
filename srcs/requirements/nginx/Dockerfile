@@ -8,7 +8,7 @@ RUN apt-get update -y \
 RUN mkdir -p /nginx
 
 #RUN adduser nginx && chown -R nginx /nginx
-#RUN rm -rf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+RUN rm -rf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 #RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/nginx.conf
 

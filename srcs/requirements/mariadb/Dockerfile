@@ -9,7 +9,7 @@ RUN apt-get update -y \
 #RUN mkdir -p /mariadb
 RUN mkdir /run/mysqld
 RUN chown -R mysql:mysql /run/mysqld/
-COPY script.sh ./script.sh
+#COPY script.sh ./script.sh
 
 EXPOSE 3306
 

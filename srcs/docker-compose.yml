@@ -1,12 +1,41 @@
 version: '3'
 
 services:
-
+    nginx:
+        build:
+            context: ./requirements/nginx
+            dockerfile: Dockerfile
+        image: nginx
+        container_name: nginx
+        volumes:
+            - wdata:/data
+        ports:
+            - "443:443"
+        restart: always
     db:
+        build:
+            context: ./requirements/mariadb
+            dockerfile: Dockerfile
         image: mariadb
         restart: always
         environment:
-            -MYSQL_TCP_PORT=xxxx
-            - MYiSQL_ROOT_PASSWORD=1235
+            - MYSQL_TCP_PORT
+            - MYiSQL_ROOT_PASSWORD
+        volumes:
+            - dbdata:/dbdata
         ports:
-            - "xxx:3306
+            - "3306:3306"
+
+    volumes:
+        wdata:
+            driver: local
+            driver_opts:
+                type: 'none'
+                o: 'bind'
+                device: './data/w'
+        dbdata:
+            driver: local
+            driver_opts:
+                type: 'none'
+                o: 'bind'
+                device: './data/db'
