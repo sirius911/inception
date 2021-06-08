@@ -8,7 +8,7 @@ services:
         image: nginx
         container_name: nginx
         volumes:
-            - wdata:/data
+            - "/home/clorin/data/nginx:/nginx"
         ports:
             - "443:443"
         restart: always
@@ -19,23 +19,20 @@ services:
         image: mariadb
         restart: always
         environment:
-            - MYSQL_TCP_PORT
-            - MYiSQL_ROOT_PASSWORD
-        volumes:
-            - dbdata:/dbdata
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
         ports:
             - "3306:3306"
-
-    volumes:
-        wdata:
-            driver: local
-            driver_opts:
-                type: 'none'
-                o: 'bind'
-                device: './data/w'
-        dbdata:
-            driver: local
-            driver_opts:
-                type: 'none'
-                o: 'bind'
-                device: './data/db'
+        volumes:
+            - "/home/clorin/data/mysql:/var/lib/mysql"
+    wordpress:
+        build:
+            context: ./requirements/wordpress
+            dockerfile: Dockerfile
+        image: wordpress
+        depends_on:
+            - nginx
+        volumes:
+            - "/home/clorin/data/nginx:/wordpress"

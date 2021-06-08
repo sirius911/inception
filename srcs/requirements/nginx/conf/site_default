@@ -1,3 +1,7 @@
+upstream php-wp {
+	server	unix:/var/run/wordpress.sock;
+}
+
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
@@ -7,10 +11,10 @@ server {
 	ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 	ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
-	server_name localhost;
+	server_name clorin.42.fr;
 	autoindex on;
 	index index.php index.html;
-	root /nginx;
+	root /var/www/wordpress;
 
 	location / {
 		try_files $uri $uri/ =404;
