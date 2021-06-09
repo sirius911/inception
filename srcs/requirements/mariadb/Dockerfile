@@ -10,6 +10,7 @@ RUN mkdir -p /mariadb
 RUN mkdir /run/mysqld
 RUN chown -R mysql:mysql /run/mysqld/
 RUN chown -R mysql:mysql /var/lib/mysql
+RUN chown -R mysql:mysql /mariadb
 RUN mysql_install_db --user=mysql --datadir='/mariadb'
 COPY script.sh ./script.sh
 

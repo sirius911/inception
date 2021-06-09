@@ -8,7 +8,7 @@ services:
         image: nginx
         container_name: nginx
         volumes:
-            - "/home/clorin/data/nginx:/nginx"
+            - /Users/clorin/42/data:/nginx
         ports:
             - "443:443"
         restart: always
@@ -26,7 +26,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - "/home/clorin/data/mysql:/var/lib/mysql"
+            - "/Users/clorin/42/data/mysql:/mariadb"
     wordpress:
         build:
             context: ./requirements/wordpress
@@ -35,4 +35,4 @@ services:
         depends_on:
             - nginx
         volumes:
-            - "/home/clorin/data/nginx:/wordpress"
+            - /Users/clorin/42/data:/wordpress

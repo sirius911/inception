@@ -10,5 +10,5 @@ COPY script.sh /wordpress/script.sh
 COPY install_wordpress.sh /wordpress/install_wordpress.sh
 WORKDIR /wordpress
 
-CMD ["/wordpress/script.sh"]
+CMD ["script.sh"]
 
