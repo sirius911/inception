@@ -12,6 +12,8 @@ services:
         ports:
             - "443:443"
         restart: always
+        networks:
+            - backend
     db:
         build:
             context: ./requirements/mariadb
@@ -27,6 +29,8 @@ services:
             - "3306:3306"
         volumes:
             - "/Users/clorin/42/data/mysql:/mariadb"
+        networks:
+            - backend
     wordpress:
         build:
             context: ./requirements/wordpress
@@ -36,3 +40,7 @@ services:
             - nginx
         volumes:
             - /Users/clorin/42/data:/wordpress
+        networks:
+            - backend
+network:
+    - backend:
