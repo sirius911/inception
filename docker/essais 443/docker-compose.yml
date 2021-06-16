@@ -9,7 +9,7 @@ services:
      image: nginx:stable
      ports:
      # - 443:443
-     - 8085:80
+     - 80:80
      depends_on:
       - wordpress-fpm
      volumes:

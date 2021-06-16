@@ -7,15 +7,15 @@ RUN apt-get update -y \
 
 RUN mkdir -p /nginx
 
-#RUN rm -rf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
+RUN adduser --no-create-home --disabled-password nginx
+
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-#COPY conf/site_default /etc/nginx/sites-available/default
-#RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default.conf
+COPY conf/server.conf /etc/nginx/cond.d/server.conf
 
 #implementation of SSL certificates
 RUN openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Paris/O=42/OU=42Paris/CN=clorin" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt;
 
-EXPOSE 443
+EXPOSE 443 80
 
 #CMD ["../script.sh"]
 CMD ["nginx", "-g", "daemon off;"]
