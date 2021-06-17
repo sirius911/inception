@@ -3,20 +3,14 @@ version: '3.5'
 services:
    nginx:
      container_name: nginx
-     # build:
-     #        context: ./nginx
-     #        dockerfile: Dockerfile
-     image: nginx:stable
+     build: nginx/
      ports:
      # - 443:443
      - 80:80
      depends_on:
       - wordpress-fpm
      volumes:
-       - ./conf.d:/etc/nginx/conf.d
        - wp_files:/var/www/html
-     # links:
-     #    - wordpress-fpm
      networks:
       - frontend
    db:
@@ -35,8 +29,6 @@ services:
    wordpress-fpm:
      image: wordpress:5-fpm
      container_name: wordpress
-     # links:
-     #  - db
      networks:
       - frontend
       - backend

@@ -1,21 +1,15 @@
-FROM debian:buster
+FROM		alpine:3.13.4
 
 LABEL maintener="clorin@student.42.fr" release-date="2021-06-04"
 
-RUN apt-get update -y \
-	&& apt-get install -y nginx openssl vim
+RUN		apk add --no-cache nginx openssl vim
 
-RUN mkdir -p /nginx
+RUN		mkdir -p /run/nginx && chown nginx:nginx /run/nginx
 
-#RUN rm -rf /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-#COPY conf/site_default /etc/nginx/sites-available/default
-#RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default.conf
+COPY	conf/ /entrypoint/
 
-#implementation of SSL certificates
-RUN openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Paris/O=42/OU=42Paris/CN=clorin" -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt;
+WORKDIR		/entrypoint
 
-EXPOSE 443
+EXPOSE		443
 
-#CMD ["../script.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT 	["sh", "script.sh"]
