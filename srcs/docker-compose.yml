@@ -5,8 +5,8 @@ services:
         build: requirements/nginx/
         image: nginx
         container_name: nginx
-        depends_on:
-            - wordpress
+        # depends_on:
+        #     - wordpress
         ports:
             - "443:443"
         volumes:
@@ -18,7 +18,7 @@ services:
     db:
         build: requirements/mariadb
         image: mariadb
-        restart: always
+        container_name: mariadb
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
             - MYSQL_DATABASE=${MYSQL_DATABASE}
@@ -27,27 +27,33 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - "/Users/clorin/42/data/mysql:/mariadb"
+            - dbdata:/home/mariadb
+        # restart: always
         # networks:
         #     - backend
-    wordpress:
-        build:
-            context: ./requirements/wordpress
-            dockerfile: Dockerfile
-        image: wordpress
-        depends_on:
-            - db
-        volumes:
-            - /Users/clorin/42/data:/wordpress
+    # wordpress:
+    #     build:
+    #         context: ./requirements/wordpress
+    #         dockerfile: Dockerfile
+    #     image: wordpress
+    #     depends_on:
+    #         - db
+    #     volumes:
+    #         - wp_files:/wordpress
         # networks:
         #     - backend
 volumes:
-  wp_files:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '$HOME/data/wordpress'
-
+    wp_files:
+        driver: local
+        driver_opts:
+            type: none
+            o: 'bind'
+            device: '$HOME/data/wordpress'
+    dbdata:
+        driver: local
+        driver_opts:
+            type: none
+            o: 'bind'
+            device: '$HOME/data/db'
 # network:
 #     - backend:
