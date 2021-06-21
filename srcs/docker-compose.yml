@@ -5,8 +5,8 @@ services:
         build: requirements/nginx/
         image: nginx
         container_name: nginx
-        # depends_on:
-        #     - wordpress
+        depends_on:
+            - wordpress
         ports:
             - "443:443"
         volumes:
@@ -24,8 +24,6 @@ services:
             - MYSQL_DATABASE=${MYSQL_DATABASE}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        ports:
-            - "3306:3306"
         volumes:
             - dbdata:/home/mariadb
         restart: always
@@ -34,6 +32,7 @@ services:
     wordpress:
         build: requirements/wordpress
         image: wordpress
+        container_name: wordpress
         depends_on:
             - db
         volumes:
@@ -49,6 +48,7 @@ services:
             - WORDPRESS_DB_USER_PASSWORD=${WORDPRESS_DB_USER_PASSWORD}
             - WORDPRESS_PATH=${WORDPRESS_PATH}
             - DOMAIN_NAME=${DOMAIN_NAME}
+
         restart: always
         # networks:
         #     - backend

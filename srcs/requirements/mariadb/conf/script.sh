@@ -2,7 +2,7 @@
 
 /usr/bin/mysqld_safe --datadir='/home/mariadb'
 
-sleep 10
+sleep 1000000
 
 if ! mysqladmin --wait=60 ping; then
 	exit 1

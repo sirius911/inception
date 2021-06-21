@@ -1,5 +1,6 @@
 #!/bin/sh
 
+sleep 1000000
 cd ${WORDPRESS_PATH}
 
 if [ ! -f "wp-config.php" ] ; then
