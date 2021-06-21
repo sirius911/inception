@@ -15,6 +15,4 @@ RUN		mariadb-install-db --user=mysql --datadir='/home/mariadb'
 
 WORKDIR		/entrypoint
 
-EXPOSE 3306
-
 ENTRYPOINT ["sh", "script.sh"]

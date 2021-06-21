@@ -1,20 +1,21 @@
 #!/bin/sh
 
-sleep 1000000
 cd ${WORDPRESS_PATH}
 
 if [ ! -f "wp-config.php" ] ; then
 	echo "Downloading wordpress..."
 	wp core download --locale=fr_FR 2> /dev/null
+else
+	echo "wp-config is present..."
 fi
-
+cd /
 #connect mariadb
-connected=0
-while [[ $connected -eq 0 ]] ; do
-	mariadb -h${WORDPRESS_DB_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} &> /dev/null
-	[[ $? -eq 0 ]] && { connected=$(( $connected + 1 ));}
-	sleep 1
-done
+#connected=0
+#while [[ $connected -eq 0 ]] ; do
+#	mariadb -h${WORDPRESS_DB_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} &> /dev/null
+#	[[ $? -eq 0 ]] && { connected=$(( $connected + 1 ));}
+#	sleep 1
+#done
 
 #config wordpress
 if [ ! -f "wp-config.php" ] ; then
