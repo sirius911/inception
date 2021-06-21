@@ -28,18 +28,28 @@ services:
             - "3306:3306"
         volumes:
             - dbdata:/home/mariadb
-        # restart: always
+        restart: always
         # networks:
         #     - backend
-    # wordpress:
-    #     build:
-    #         context: ./requirements/wordpress
-    #         dockerfile: Dockerfile
-    #     image: wordpress
-    #     depends_on:
-    #         - db
-    #     volumes:
-    #         - wp_files:/wordpress
+    wordpress:
+        build: requirements/wordpress
+        image: wordpress
+        depends_on:
+            - db
+        volumes:
+            - wp_files:${WORDPRESS_PATH}
+        environment:
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - WORDPRESS_DB_HOST=${WORDPRESS_DB_HOST}
+            - WORDPRESS_DB_ADMIN=${WORDPRESS_DB_ADMIN}
+            - WORDPRESS_DB_ADMIN_PASSWORD=${WORDPRESS_DB_ADMIN_PASSWORD}
+            - WORDPRESS_DB_USER=${WORDPRESS_DB_USER}
+            - WORDPRESS_DB_USER_PASSWORD=${WORDPRESS_DB_USER_PASSWORD}
+            - WORDPRESS_PATH=${WORDPRESS_PATH}
+            - DOMAIN_NAME=${DOMAIN_NAME}
+        restart: always
         # networks:
         #     - backend
 volumes:
