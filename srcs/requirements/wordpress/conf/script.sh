@@ -4,11 +4,11 @@ cd ${WORDPRESS_PATH}
 
 if [ ! -f "wp-config.php" ] ; then
 	echo "Downloading wordpress..."
-	wp core download --locale=fr_FR 2> /dev/null
+	wp core download --locale=fr_FR
 else
-	echo "wp-config is present..."
+	echo "wp-config is present... not downloading wordpress"
 fi
-cd /
+
 #connect mariadb
 #connected=0
 #while [[ $connected -eq 0 ]] ; do
@@ -19,12 +19,18 @@ cd /
 
 #config wordpress
 if [ ! -f "wp-config.php" ] ; then
+	echo "no wp-config.php --> create config db"
 	wp config create --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=${WORDPRESS_DB_HOST}
+else
+	echo "wp-config.php exist... "
 fi
 
 # create administrator wordpress
 if ! wp core is-installed ; then
+	echo "core not installed... core install..."
 	wp core install --url=${DOMAIN_NAME} --title="Sirius's blog 42" --admin_user=${WORDPRESS_DB_ADMIN} --admin_password=${WORDPRESS_DB_ADMIN_PASSWORD} --admin_email="${WORDPRESS_DB_ADMIN}@42.fr" --skip-email
+else
+	echo "core installed... no core install"
 fi
 
 #create user wordpress
