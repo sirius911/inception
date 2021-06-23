@@ -30,7 +30,7 @@ if ! wp core is-installed ; then
 	echo "core not installed... core install..."
 	wp core install --url=${DOMAIN_NAME} --title="Sirius's blog 42" --admin_user=${WORDPRESS_DB_ADMIN} --admin_password=${WORDPRESS_DB_ADMIN_PASSWORD} --admin_email="${WORDPRESS_DB_ADMIN}@42.fr" --skip-email
 else
-	echo "core installed... no core install"
+	echo "core is already installed..."
 fi
 
 #create user wordpress

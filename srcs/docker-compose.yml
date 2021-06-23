@@ -58,12 +58,12 @@ volumes:
         driver_opts:
             type: none
             o: 'bind'
-            device: '$HOME/data/wordpress'
+            device: '/home/clorin/data/wordpress'
     dbdata:
         driver: local
         driver_opts:
             type: none
             o: 'bind'
-            device: '$HOME/data/db'
+            device: '/home/clorin/data/db'
 # network:
 #     - backend:
