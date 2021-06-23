@@ -19,5 +19,5 @@ fi
 sudo mkdir -p -v ${PATH_HOST}
 sudo mkdir -p -v ${PATH_HOST}/db
 sudo mkdir -p -v ${PATH_HOST}/wordpress
-sudo chown -R $USER:everyone ${PATH_HOST}
+sudo chown -R $USER:$USER ${PATH_HOST}
 sudo chmod -R 755 ${PATH_HOST}
