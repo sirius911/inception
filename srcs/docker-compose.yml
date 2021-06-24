@@ -11,8 +11,6 @@ services:
             - "443:443"
         volumes:
             - wp_files:/home
-        # networks:
-        #     - backend
         restart: always
 
     db:
@@ -27,8 +25,7 @@ services:
         volumes:
             - dbdata:/home/mariadb
         restart: always
-        # networks:
-        #     - backend
+
     wordpress:
         build: requirements/wordpress
         image: wordpress
@@ -48,10 +45,8 @@ services:
             - WORDPRESS_DB_USER_PASSWORD=${WORDPRESS_DB_USER_PASSWORD}
             - WORDPRESS_PATH=${WORDPRESS_PATH}
             - DOMAIN_NAME=${DOMAIN_NAME}
-
         restart: always
-        # networks:
-        #     - backend
+
 volumes:
     wp_files:
         driver: local
@@ -65,5 +60,3 @@ volumes:
             type: none
             o: 'bind'
             device: '/home/clorin/data/db'
-# network:
-#     - backend:

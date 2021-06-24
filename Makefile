@@ -13,6 +13,7 @@
 all:	
 		@/bin/bash srcs/requirements/tools/build.sh
 		@cd srcs/ && docker-compose up -d --build
+		@/bin/bash srcs/requirements/tools/control.sh
 
 start:
 		@cd srcs/ && docker-compose start
@@ -32,7 +33,9 @@ clean:
 re:		fclean all
 
 fclean:	clean
-		@docker system prune --volumes --all --force
+		@docker system prune --all --force
+		@docker volume rm srcs_dbdata --force
+		@docker volume rm srcs_wp_files --force
 		@/bin/bash srcs/requirements/tools/clean.sh
 
 .PHONY: all, start, stop, ps, log, clean, fclean, re

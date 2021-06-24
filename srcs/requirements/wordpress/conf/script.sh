@@ -10,12 +10,12 @@ else
 fi
 
 #connect mariadb
-#connected=0
-#while [[ $connected -eq 0 ]] ; do
-#	mariadb -h${WORDPRESS_DB_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} &> /dev/null
-#	[[ $? -eq 0 ]] && { connected=$(( $connected + 1 ));}
-#	sleep 1
-#done
+connected=0
+while [[ $connected -eq 0 ]] ; do
+	mariadb -h${WORDPRESS_DB_HOST} -u${MYSQL_USER} -p${MYSQL_PASSWORD} &> /dev/null
+	[[ $? -eq 0 ]] && { connected=$(( $connected + 1 ));}
+	sleep 1
+done
 
 #config wordpress
 if [ ! -f "wp-config.php" ] ; then
@@ -46,6 +46,8 @@ wp user list
 
 echo "Wordpress info:"
 wp --info
+
+touch .installed
 
 echo "Starting php-fpm..."
 php-fpm7 -F
