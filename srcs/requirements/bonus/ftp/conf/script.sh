@@ -5,18 +5,17 @@
 #                                                     +:+ +:+         +:+      #
 #    By: clorin <clorin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/06/24 13:55:46 by clorin            #+#    #+#              #
-#    Updated: 2021/06/24 13:56:03 by clorin           ###   ########.fr        #
+#    Created: 2021/06/24 14:12:23 by clorin            #+#    #+#              #
+#    Updated: 2021/06/24 14:12:57 by clorin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/sh
 
-if [ ! -f "$CERT_KEY" ] ; then
-	openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Paris/O=42/OU=42Paris/CN=${DOMAIN_NAME}" -newkey rsa:2048 -keyout ${CERTS_KEY} -out ${CERTS_KEY};
-fi
+cp vsftpd.conf /etc/vsftpd
 
-if [ -f "default.conf" ] ; then
-	mv default.conf /etc/nginx/http.d/
-fi
-nginx -g "daemon off;"
+{ echo "user42"; echo "user42"; } | adduser clorinftp
+
+cp vsftpd.user_list /etc/vsftpd
+
+vsftpd /etc/vsftpd/vsftpd.conf

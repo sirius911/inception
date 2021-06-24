@@ -5,17 +5,12 @@ services:
         build: requirements/nginx/
         image: nginx
         container_name: nginx
-        environment:
-            - DOMAIN_NAME=${DOMAIN_NAME}
-            - CERTS_KEY=${CERTS_KEY}
-            - PATH_CERTS=${PATH_CERTS}
         depends_on:
             - wordpress
         ports:
             - "443:443"
         volumes:
             - wp_files:/home
-            - certs_data:${PATH_CERTS}
         restart: always
 
     db:
@@ -52,6 +47,18 @@ services:
             - DOMAIN_NAME=${DOMAIN_NAME}
         restart: always
 
+    ftp:
+        build: requirements/bonus/ftp/
+        image: ftp
+        container_name: ftp
+        depends_on:
+            - wordpress
+        volumes:
+            - wp_files:/home/clorin
+        ports:
+        - "21:21"
+        restart: always
+
 volumes:
     wp_files:
         driver: local
@@ -65,5 +72,3 @@ volumes:
             type: none
             o: 'bind'
             device: '${PATH_LOGIN}/data/db'
-    certs_data:
-        driver: local

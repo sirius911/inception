@@ -1,22 +1,26 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    script.sh                                          :+:      :+:    :+:    #
+#    Dockerfile                                         :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: clorin <clorin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/06/24 13:55:46 by clorin            #+#    #+#              #
-#    Updated: 2021/06/24 13:56:03 by clorin           ###   ########.fr        #
+#    Created: 2021/06/24 14:07:48 by clorin            #+#    #+#              #
+#    Updated: 2021/06/24 14:11:26 by clorin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#!/bin/sh
+FROM		alpine:3.13.4
 
-if [ ! -f "$CERT_KEY" ] ; then
-	openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Paris/O=42/OU=42Paris/CN=${DOMAIN_NAME}" -newkey rsa:2048 -keyout ${CERTS_KEY} -out ${CERTS_KEY};
-fi
+LABEL 		maintener="clorin@student.42.fr" release-date="2021-06-23"
 
-if [ -f "default.conf" ] ; then
-	mv default.conf /etc/nginx/http.d/
-fi
-nginx -g "daemon off;"
+RUN		apk add --no-cache vsftpd
+
+COPY		conf/ /entrypoint
+
+WORKDIR		/entrypoint
+
+EXPOSE		21
+
+ENTRYPOINT	["sh", "script.sh"]
+
