@@ -53,10 +53,10 @@ volumes:
         driver_opts:
             type: none
             o: 'bind'
-            device: '/home/clorin/data/wordpress'
+            device: '${PATH_LOGIN}/data/wordpress'
     dbdata:
         driver: local
         driver_opts:
             type: none
             o: 'bind'
-            device: '/home/clorin/data/db'
+            device: '${PATH_LOGIN}/data/db'
