@@ -29,26 +29,43 @@ start_bonus:
 stop:
 		@cd srcs/ && docker-compose stop
 
+stop_bonus:
+		@cd srcs/ && docker-compose -f docker-compose_bonus.yml stop
+
 ps:
 		@cd srcs/ && docker-compose ps
 
 ps_bonus:
 		@cd srcs/ && docker-compose -f docker-compose_bonus.yml ps
 
-log:
+logs:
 		@cd srcs/ && docker-compose logs
 
+logs_bonus:
+		@cd srcs/ && docker-compose -f docker-compose_bonus.yml logs
 
 clean:
 		@cd srcs/ && docker-compose down
 
-re:		fclean all
+clean_bonus:
+		@cd srcs/ && docker-compose -f docker-compose_bonus.yml down
 
-fclean:	clean
+fclean:		clean
 		@docker system prune --all --force
 		@docker volume rm srcs_dbdata --force
 		@docker volume rm srcs_wp_files --force
 		@docker volume rm srcs_certs_data --force
 		@/bin/bash srcs/requirements/tools/clean.sh
 
-.PHONY: all, start, stop, ps, log, clean, fclean, re, bonus
+fclean_bonus:	clean_bonus
+		@docker system prune --all --force
+		@docker volume rm srcs_dbdata --force
+		@docker volume rm srcs_wp_files --force
+		@docker volume rm srcs_certs_data --force
+		@/bin/bash srcs/requirements/tools/clean.sh
+
+re:		fclean all
+
+re_bonus:	fclean_bonus bonus
+
+.PHONY: all, start, stop, ps, logs, clean, fclean, re, bonus, start_bonus, stop_bonus, ps_bonus, logs_bonus, clean_bonus, fclean_bonus, re_bonus

@@ -65,7 +65,7 @@ services:
         container_name: ftp
         environment:
             - PATH_FTP=${PATH_FTP}
-            - CERT_KEY=${CERT_KEY}
+            - CERTS_KEY=${CERTS_KEY}
         depends_on:
             - wordpress
         volumes:

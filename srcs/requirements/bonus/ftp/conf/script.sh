@@ -15,18 +15,18 @@
 path=$(echo ${PATH_FTP} | sed 's_/_\\/_g')
 sed -i "s/PATH_FTP/${path}/g" vsftpd.conf
 
-cert=$(echo ${CERT_KEY} | sed 's_/_\\/_g')
-sed -i "s/CERT_KEY/${cert}/g" vsftpd.conf
+cert=$(echo ${CERTS_KEY} | sed 's_/_\\/_g')
+sed -i "s/CERTS_KEY/${cert}/g" vsftpd.conf
 
 cp vsftpd.conf /etc/vsftpd
 
-{ echo "user42"; echo "user42"; } | adduser clorinftp
+{ echo "user42"; echo "user42"; } | adduser clorin
 
 cp vsftpd.user_list /etc/vsftpd
 
-if [ ! -f ${CERT_KEY} ] ; then
+if [ ! -f ${CERTS_KEY} ] ; then
 	echo -n "Waiting for certificat "
-	while [ ! -f ${CERT_KEY} ]; do
+	while [ ! -f ${CERTS_KEY} ]; do
 		echo -n "."
 		sleep 1
 	done
