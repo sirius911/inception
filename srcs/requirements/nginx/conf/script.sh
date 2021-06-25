@@ -12,7 +12,7 @@
 
 #!/bin/sh
 
-if [ ! -f "$CERT_KEY" ] ; then
+if [ ! -f "$CERTS_KEY" ] ; then
 	openssl req -x509 -nodes -days 365 -subj "/C=FR/ST=France/L=Paris/O=42/OU=42Paris/CN=${DOMAIN_NAME}" -newkey rsa:2048 -keyout ${CERTS_KEY} -out ${CERTS_KEY};
 fi
 
