@@ -32,5 +32,4 @@ if [ ! -f ${CERTS_KEY} ] ; then
 	done
 	echo "ok"
 fi
-
 vsftpd /etc/vsftpd/vsftpd.conf
