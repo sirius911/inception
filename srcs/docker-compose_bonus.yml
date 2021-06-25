@@ -66,6 +66,8 @@ services:
         environment:
             - PATH_FTP=${PATH_FTP}
             - CERTS_KEY=${CERTS_KEY}
+            - FTP_USER=${FTP_USER}
+            - FTP_PASSWORD=${FTP_PASSWORD}
         depends_on:
             - wordpress
         volumes:
