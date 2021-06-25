@@ -3,7 +3,7 @@ version: '3'
 services:
     nginx:
         build: requirements/nginx/
-        image: nginx
+        image: nginx:v01
         container_name: nginx
         environment:
             - DOMAIN_NAME=${DOMAIN_NAME}
@@ -22,7 +22,7 @@ services:
             - backend
     db:
         build: requirements/mariadb
-        image: mariadb
+        image: mariadb:v01
         container_name: mariadb
         environment:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -38,7 +38,7 @@ services:
 
     wordpress:
         build: requirements/wordpress
-        image: wordpress
+        image: wordpress:v01
         container_name: wordpress
         depends_on:
             - db
@@ -61,7 +61,7 @@ services:
             - backend
     ftp:
         build: requirements/bonus/ftp/
-        image: ftp
+        image: ftp:v01
         container_name: ftp
         environment:
             - PATH_FTP=${PATH_FTP}
@@ -75,6 +75,8 @@ services:
         - "21:21"
         restart: always
 
+        networks:
+            - backend
 volumes:
     wp_files:
         driver: local
