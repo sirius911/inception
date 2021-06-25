@@ -5,14 +5,21 @@ services:
         build: requirements/nginx/
         image: nginx
         container_name: nginx
+        environment:
+            - DOMAIN_NAME=${DOMAIN_NAME}
+            - CERTS_KEY=${CERTS_KEY}
+            - PATH_CERTS=${PATH_CERTS}
         depends_on:
             - wordpress
         ports:
             - "443:443"
         volumes:
             - wp_files:/home
+            - certs_data:${PATH_CERTS}
         restart: always
 
+        networks:
+            - backend
     db:
         build: requirements/mariadb
         image: mariadb
@@ -25,6 +32,9 @@ services:
         volumes:
             - dbdata:/home/mariadb
         restart: always
+
+        networks:
+            - backend
 
     wordpress:
         build: requirements/wordpress
@@ -47,14 +57,20 @@ services:
             - DOMAIN_NAME=${DOMAIN_NAME}
         restart: always
 
+        networks:
+            - backend
     ftp:
         build: requirements/bonus/ftp/
         image: ftp
         container_name: ftp
+        environment:
+            - PATH_FTP=${PATH_FTP}
+            - CERT_KEY=${CERT_KEY}
         depends_on:
             - wordpress
         volumes:
-            - wp_files:/home/clorin
+            - wp_files:${PATH_FTP}
+            - certs_data:${PATH_CERTS}
         ports:
         - "21:21"
         restart: always
@@ -72,3 +88,9 @@ volumes:
             type: none
             o: 'bind'
             device: '${PATH_LOGIN}/data/db'
+    certs_data:
+        driver: local
+
+networks:
+    backend:
+        driver: bridge
