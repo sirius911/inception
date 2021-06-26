@@ -59,6 +59,7 @@ wp user list
 echo "Wordpress info:"
 wp --info
 
+#wordpress installed and download finish
 touch .installed
 
 echo "Starting php-fpm..."
